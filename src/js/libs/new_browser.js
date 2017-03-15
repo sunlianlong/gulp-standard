@@ -3,6 +3,7 @@
  */
 function Browser(){
     var us = navigator.userAgent.toLowerCase();
+    us = "Mozilla/5.0 (Linux; Android 4.4.4; HM NOTE 1S Build/KTU84P; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/53.0.2785.49 Mobile MQQBrowser/6.2 TBS/043015 Safari/537.36 V1_AND_SQ_6.6.9_482_YYB_D PA QQ/6.6.9.3060 NetType/WIFI WebP/0.3.0 Pixel/720";
     var instance = {};
     instance.system = getSystem();
     instance.isIOS9 = checkIOS9();
@@ -87,7 +88,7 @@ function Browser(){
         return false;
     };
     function checkQQ(){
-        if(us.match(/\sQQ/i)=="qq"){
+        if (us.match(/QQ\//i) == "QQ/") {
             return true;
         }
         return false;
