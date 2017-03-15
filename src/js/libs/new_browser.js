@@ -5,14 +5,9 @@ function Browser(){
     var us = navigator.userAgent.toLowerCase();
     var instance = {};
     instance.system = getSystem();
-    instance.isIOS9 = checkIOS9();
-    instance.isIOS10 = checkIOS10();
-    instance.isBaiduApp = checkBaiduApp();
-    instance.isBaiduBrowser = checkBaiduBrowser();
     instance.isWechat = checkWechat();
     instance.isQQ = checkQQ();
-    instance.isSafari = checkSafari();
-
+    instance.isBrowser = checkBrowser();
     function getSystem(){
         if(us.indexOf("android") != -1 || us.indexOf("linux") != -1){
             return "Android";
@@ -40,46 +35,6 @@ function Browser(){
         }
         return "pc";
     };
-
-    function checkIOS9(){
-        var n = us.match(/OS [9]_\d[_\d]* like Mac OS X/i);
-        if(n == null){
-            return false;
-        }
-        return true;
-    };
-
-    function checkIOS10() {
-        var n = us.match(/OS [1][0]_\d[_\d]* like Mac OS X/i)
-        if(n == null){
-            return false;
-        }
-        return true;
-    };
-
-    function checkSafari() {
-        var n = us.match(/version\/([\d.]+).*safari/);
-        var m = us.indexOf('mqqbrowser/');
-        var j = us.indexOf('baidubrowser');
-        // alert(m);
-        // if(n != null && m == -1) {
-        if(n != null && m == -1 && j == -1) {
-            return true;
-        }
-        return false;
-    };
-    function checkBaiduApp(){
-        if(us.indexOf("baiduboxapp") != -1){
-            return true;
-        }
-        return false;
-    };
-    function checkBaiduBrowser(){
-        if(us.indexOf("baidubrowser") != -1){
-            return true;
-        }
-        return false;
-    };
     function checkWechat(){
         if(us.indexOf("micromessenger") != -1){
             return true;
@@ -88,6 +43,12 @@ function Browser(){
     };
     function checkQQ(){
         if (us.match(/QQ\//i)&&String(us.match(/QQ\//i)) == "qq/") {
+            return true;
+        }
+        return false;
+    };
+    function checkBrowser(){
+        if (us.match(/zh-cn/i)&&String(us.match(/zh-cn/i)) == "zh-cn") {
             return true;
         }
         return false;
