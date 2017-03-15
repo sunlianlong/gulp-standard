@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <title>
+            购物车
+        </title>
+        <meta name="description" content=""/>
+        <meta name="keywords" content=""/>
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+        <style type="text/css">
+          body,div,li,ol,p,td,th,ul{margin:0;padding:0}li{list-style:none}img{border:0;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;touch-callout:none}table{border-spacing:0;border-collapse:collapse}html{font-family:sans-serif;-webkit-user-select:none;user-select:none;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%}:focus{outline:0}:link,:visited{text-decoration:none}a:active,a:hover{outline:0}*{-webkit-box-sizing:border-box;box-sizing:border-box}
+          </style>
+          <meta name="hotcss" content="design-width=750">
+          <script>
+          (function(e,t){var n={};(function(){var r=t.querySelector('meta[name="viewport"]'),i=t.querySelector('meta[name="hotcss"]'),s=e.devicePixelRatio||1,o=540,u=0;s=s>=3?3:s>=2?2:1;if(i){var a=i.getAttribute("content");if(a){var f=a.match(/initial\-dpr=([\d\.]+)/);f&&(s=parseFloat(f[1]));var l=a.match(/max\-width=([\d\.]+)/);l&&(o=parseFloat(l[1]));var c=a.match(/design\-width=([\d\.]+)/);c&&(u=parseFloat(c[1]))}}t.documentElement.setAttribute("data-dpr",s),n.dpr=s,t.documentElement.setAttribute("max-width",o),n.maxWidth=o,u&&t.documentElement.setAttribute("design-width",u),n.designWidth=u;var h=1/s,p="width=device-width, initial-scale="+h+", minimum-scale="+h+", maximum-scale="+h+", user-scalable=no";r?r.setAttribute("content",p):(r=t.createElement("meta"),r.setAttribute("name","viewport"),r.setAttribute("content",p),t.head.appendChild(r))})(),n.px2rem=function(e,t){return t||(t=parseInt(n.designWidth,10)),parseInt(e,10)*320/t/20},n.rem2px=function(e,t){return t||(t=parseInt(n.designWidth,10)),e*20*t/320},n.mresize=function(){var r=t.documentElement.getBoundingClientRect().width||e.innerWidth;n.maxWidth&&r/n.dpr>n.maxWidth&&(r=n.maxWidth*n.dpr);if(!r)return!1;t.documentElement.style.fontSize=r*20/320+"px",n.callback&&n.callback()},n.mresize(),e.addEventListener("resize",function(){clearTimeout(n.tid),n.tid=setTimeout(n.mresize,33)},!1),e.addEventListener("load",n.mresize,!1),setTimeout(function(){n.mresize()},333),e.hotcss=n})(window,document);
+          </script>
+          <style>body{width: 16rem;margin: 0 auto;}</style>
+          <link rel="stylesheet" href="css/style.css?rev=@@hash">
+        <link rel="stylesheet" href="css/layer.css?rev=@@hash">
+        </script>
+    </head>
+    <body>
+        <div id="container">
+            <div id="header">
+                <ul class="clearfix">
+                    <li class="shop">购物车</li>
+                    <li class="edit">编辑</li>
+                </ul>
+            </div>
+            <div id="section">
+                <div class="section_box">
+                </div>
+            </div>
+        </div>
+        
+        <div id="footer">
+            <ul>
+                <li class="home">
+                        <img src="img/index/a1.png?rev=@@hash"/>
+                    <p class="first">首页</p>
+                </li>
+                <li class="shoppingCart">
+                        <img src="img/index/b2.png"/>
+                    <p class="second">购物车</p>
+                </li>
+                <li class="mine">
+                        <img src="img/index/a3.png"/>
+                    <p class="third">我的</p>
+                </li>
+            </ul>
+        </div>
+        <script src="js/config/config.js?rev=@@hash"></script>
+        <script src="js/libs/require.js" data-main="js/index.js"></script>
+    </body>
+</html>
