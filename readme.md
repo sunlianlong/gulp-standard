@@ -30,3 +30,8 @@ gulp rjs
 gulp build
 ```
 生成合并后文件,需要在index.html中去掉require及config的引入，换成index.js
+
+
+####项目默认使用requirejs,默认引入了[JSLite(jquery精简)](http://jslite.io/)、[fastclick.js](https://github.com/ftlabs/fastclick)、[layerMobile.js](https://github.com/sentsin/layer/tree/master/src/mobile)、browser.js(这个来源网络)框架(库),默认使用[hotCss方案](https://github.com/imochen/hotcss)。
+
+######备注：[JSLite经过修改已与官网不同(修改了hasClass方法、去掉了ajax中其他方法只保留ajax()方法并增加callback模块与Deferred模块,支持.done()与.fail()方法)。fastclick中对目标为input的标签进行了修改,解决了网上常见的三个跟input相关的bug](https://github.com/sunlianlong/JSliteAjaxDeferred)
