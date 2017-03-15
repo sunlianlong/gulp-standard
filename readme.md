@@ -38,4 +38,4 @@ gulp build
 
 #### 项目默认使用requirejs,默认引入了[JSLite(jquery精简)](http://jslite.io/)、[fastclick.js](https://github.com/ftlabs/fastclick)、[layerMobile.js](https://github.com/sentsin/layer/tree/master/src/mobile)、browser.js(这个来源网络)框架(库),默认使用[hotCss方案](https://github.com/imochen/hotcss)。
 
-###### 备注：[点击查看JSLite与fastclick的修改](https://github.com/sunlianlong/JSliteAjaxDeferred)、browser为对浏览器的检查，目前里面有对微信、QQ、百度brower及百度app的检查
+###### 备注：[点击查看JSLite与fastclick的修改](https://github.com/sunlianlong/JSliteAjaxDeferred)、browser为对浏览器的检查，目前里面有是否是微信、QQ、PC以及是否是浏览器的检查，isBrowser为false表示为webview而不是浏览器
