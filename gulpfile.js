@@ -11,7 +11,6 @@ var gulp = require('gulp'),
     connect = require('gulp-connect'),
     url = require('url'),
     proxy = require('proxy-middleware'),
-    gulpif   = require('gulp-if'),
     runSequence = require('run-sequence');
 
 // 默认文
