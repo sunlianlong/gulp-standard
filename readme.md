@@ -8,7 +8,7 @@ gulp-rev-append 插件将通过正则(?:href|src)=”(.*)[?]rev=(.*)[“]
 
 项目中使用gulp-connect+proxy-middleware做代理，相关配置信息请修改gulpfile.js中的host对象。
 
-## 欢迎 Issues
+## 欢迎 [Issues](https://github.com/sunlianlong/gulp-standard/issues/new)
 
 
 #### 使用方法：
