@@ -87,7 +87,7 @@ function Browser(){
         return false;
     };
     function checkQQ(){
-        if (us.match(/QQ\//i) == "QQ/") {
+        if (us.match(/QQ\//i)&&String(us.match(/QQ\//i)) == "qq/") {
             return true;
         }
         return false;
