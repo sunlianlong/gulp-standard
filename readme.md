@@ -10,9 +10,11 @@ gulp-rev-append 插件将通过正则(?:href|src)=”(.*)[?]rev=(.*)[“]
 
 ## 欢迎 [Issues](https://github.com/sunlianlong/gulp-standard/issues/new)
 
-simpleProject为单页面使用require方案；只针对单页优化
+simpleProject为单页面使用require方案；适用于单页活动页
 
 someProjects为多页面项目，使用任何技术均可，但目前没有添加压缩
+
+## 注意：src文件夹中styles放所有样式文件（less、scss、css），gulp在编译时会在src中生成一个css文件，该文件中不要放入任何样式文件（由于gulp-rev-append在修改html文件中的代码是对应文件必须存在的，所以需要在src中也生成一个css便于添加版本号）
 
 #### 项目默认使用requirejs,默认引入了[JSLite(jquery精简)](http://jslite.io/)、[fastclick.js](https://github.com/ftlabs/fastclick)、[layerMobile.js](https://github.com/sentsin/layer/tree/master/src/mobile)、browser.js(这个来源网络)框架(库),默认使用[hotCss方案](https://github.com/imochen/hotcss)。
 

@@ -34,9 +34,14 @@ var host = {
     url:'http://106.75.63.191:9789'
 };
 var forbuild = true;
-// 清除生成的文件
+// 清除构建出来的dist与www文件夹
 gulp.task('clean', function() {
   return    gulp.src([host.path,host.outUrl,host.lastUrl])
+    		.pipe(clean());
+});
+// 清除缓存
+gulp.task('cleanCache', function() {
+  return    gulp.src(host.devUrl+"css")
     		.pipe(clean());
 });
 //require打包文件
@@ -78,7 +83,7 @@ gulp.task("images",function(){
 //sass转css加前缀加版本号操作
 gulp.task('scss', function() {
 	if(forbuild){
-		return  gulp.src(host.devUrl+'css/*.scss')
+		return  gulp.src(host.devUrl+'styles/*.scss')
 		        .pipe(sass())
 		        .pipe(autoprefixer({
 		            browsers: ['last 2 versions', 'Android >= 4.0'],
@@ -94,9 +99,9 @@ gulp.task('scss', function() {
 		            keepBreaks: true,//类型：Boolean 默认：false [是否保留换行]
 		            keepSpecialComments: '*'//保留所有特殊前缀 当你用autoprefixer生成的浏览器前缀，如果不加这个参数，有可能将会删除你的部分前缀
 		        }))
-		        .pipe(gulp.dest(host.devUrl+'rev'));
+		        .pipe(gulp.dest(host.devUrl+'css'));
 	}else{
-		return  gulp.src(host.devUrl+'css/*.scss')
+		return  gulp.src(host.devUrl+'styles/*.scss')
 		        .pipe(sass())
 		        .pipe(autoprefixer({
 		            browsers: ['last 2 versions', 'Android >= 4.0'],
@@ -110,13 +115,13 @@ gulp.task('scss', function() {
 		            compatibility: 'ie7',//保留ie7及以下兼容写法 类型：String 默认：''or'*' [启用兼容模式； 'ie7'：IE7兼容模式，'ie8'：IE8兼容模式，'*'：IE9+兼容模式]
 		            keepSpecialComments: '*'//保留所有特殊前缀 当你用autoprefixer生成的浏览器前缀，如果不加这个参数，有可能将会删除你的部分前缀
 		        }))
-		        .pipe(gulp.dest(host.devUrl+'rev'));
+		        .pipe(gulp.dest(host.devUrl+'css'));
 	}
 });
 //sass转css加前缀加版本号操作
 gulp.task('less', function() {
 	if(forbuild){
-		return  gulp.src(host.devUrl+'css/*.less')
+		return  gulp.src(host.devUrl+'styles/*.less')
 		        .pipe(less())
 		        .pipe(autoprefixer({
 		            browsers: ['last 2 versions', 'Android >= 4.0'],
@@ -132,9 +137,9 @@ gulp.task('less', function() {
 		            keepBreaks: true,//类型：Boolean 默认：false [是否保留换行]
 		            keepSpecialComments: '*'//保留所有特殊前缀 当你用autoprefixer生成的浏览器前缀，如果不加这个参数，有可能将会删除你的部分前缀
 		        }))
-		        .pipe(gulp.dest(host.devUrl+'rev'));
+		        .pipe(gulp.dest(host.devUrl+'css'));
 	}else{
-		return  gulp.src(host.devUrl+'css/*.less')
+		return  gulp.src(host.devUrl+'styles/*.less')
 		        .pipe(less())
 		        .pipe(autoprefixer({
 		            browsers: ['last 2 versions', 'Android >= 4.0'],
@@ -148,27 +153,27 @@ gulp.task('less', function() {
 		            compatibility: 'ie7',//保留ie7及以下兼容写法 类型：String 默认：''or'*' [启用兼容模式； 'ie7'：IE7兼容模式，'ie8'：IE8兼容模式，'*'：IE9+兼容模式]
 		            keepSpecialComments: '*'//保留所有特殊前缀 当你用autoprefixer生成的浏览器前缀，如果不加这个参数，有可能将会删除你的部分前缀
 		        }))
-		        .pipe(gulp.dest(host.devUrl+'rev'));
+		        .pipe(gulp.dest(host.devUrl+'css'));
 	}
 });
 // 复制css文件
 gulp.task('css', function() {
 	if(forbuild){
-		return  gulp.src(host.devUrl+"css/**/*.css")
-    			.pipe(gulp.dest(host.devUrl+"rev"))
+		return  gulp.src(host.devUrl+"styles/**/*.css")
+    			.pipe(gulp.dest(host.devUrl+"css"))
 	}else{
-		return  gulp.src(host.devUrl+"css/**/*.css")
-    			.pipe(gulp.dest(host.devUrl+"rev"))
+		return  gulp.src(host.devUrl+"styles/**/*.css")
+    			.pipe(gulp.dest(host.devUrl+"css"))
 	}
     
 });
 // 复制所有样式文件
-gulp.task('cssall',['scss','less','css'], function() {
+gulp.task('cssall', function() {
 	if(forbuild){
-		return  gulp.src(host.devUrl+"rev/**/*.css")
+		return  gulp.src(host.devUrl+"css/**/*.css")
     			.pipe(gulp.dest(host.path+"css"))
 	}else{
-		return  gulp.src(host.devUrl+"rev/**/*.css")
+		return  gulp.src(host.devUrl+"css/**/*.css")
     			.pipe(gulp.dest(host.lastUrl+"css"))
 	}
     
@@ -187,11 +192,11 @@ gulp.task("js",function(){
 
 // 初始化目录
 gulp.task('init', function(done) {
-	runSequence(['clean'],['images'], ['js'],['cssall'],['html'],done);
+	runSequence(['images'],['scss'],['less'],['css'],['cssall'], ['js'],['html'],done);
 });
 gulp.task('build', function(done) {
 	forbuild = false;
-	runSequence(['clean'],['images'],['rjs'],['cssall'], ['html'],done);
+	runSequence(['images'],['scss'],['less'],['css'],['cssall'], ['rjs'],['html'],["cleanCache"],done);
 });
 // 侦听
 gulp.task("watch",function(){
@@ -201,7 +206,7 @@ gulp.task("watch",function(){
     gulp.watch(host.devUrl+"*.html",["html"]);
     // 设置队列
     gulp.watch(host.devUrl+"js/**/*.*",['js',"html"]);
-    gulp.watch(host.devUrl+"css/**/*.*",['cssall',"html"]);
+    gulp.watch(host.devUrl+"styles/**/*.*",[,'scss','less','css','cssall',"html"]);
 });
 
 // 使用connect启动一个Web服务器
