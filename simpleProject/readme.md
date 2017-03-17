@@ -10,9 +10,31 @@ gulp-rev-append 插件将通过正则(?:href|src)=”(.*)[?]rev=(.*)[“]
 
 ## 欢迎 [Issues](https://github.com/sunlianlong/gulp-standard/issues/new)
 
-simpleProject为单页面使用require方案；只针对单页优化
 
-someProjects为多页面项目，使用任何技术均可，但目前没有添加压缩
+#### 使用方法：
+1. npm install
+2. gulp init
+3. gulp
+
+清除生成的www文件夹
+gulp clean
+
+此时代码中的JS是使用requireJS加载
+
+#### 执行
+```
+gulp rjs
+```
+将代码使用r.js与almond加载到一起，此时可以去掉requirejs的引用而直接引用合并后的文件（此时代码未压缩）
+
+在gulpfile.js中找到rjs任务中默认设置了压缩为none,注释掉即为使用uglify压缩
+
+#### 执行
+```
+gulp build
+```
+生成合并后文件,需要在index.html中去掉require及config的引入，换成index.js
+
 
 #### 项目默认使用requirejs,默认引入了[JSLite(jquery精简)](http://jslite.io/)、[fastclick.js](https://github.com/ftlabs/fastclick)、[layerMobile.js](https://github.com/sentsin/layer/tree/master/src/mobile)、browser.js(这个来源网络)框架(库),默认使用[hotCss方案](https://github.com/imochen/hotcss)。
 

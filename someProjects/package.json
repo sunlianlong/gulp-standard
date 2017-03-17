@@ -17,7 +17,6 @@
   "devDependencies": {
     "gulp-clean": "^0.3.2",
     "gulp-minify-css": "^1.2.4",
-    "gulp-requirejs-optimize": "^1.2.0",
     "gulp-rev-append": "^0.1.8",
     "gulp-sass": "^3.1.0",
     "gulp-watch": "^4.3.11",

@@ -4,7 +4,6 @@ var gulp = require('gulp'),
     cssmin = require('gulp-minify-css'),
     cssver = require('gulp-make-css-url-version'),
     autoprefixer = require('gulp-autoprefixer'),
-    requirejsOptimize = require('gulp-requirejs-optimize'),
     rev = require('gulp-rev-append'),
     watch = require('gulp-watch'),
     clean = require('gulp-clean'),
@@ -36,28 +35,15 @@ gulp.task('clean', function() {
   return    gulp.src([host.path,host.outUrl,host.lastUrl])
     		.pipe(clean());
 });
-//require打包文件
-gulp.task('rjs', function () {
-	return  gulp.src('src/js/index.js')
-		    .pipe(requirejsOptimize({
-		      mainConfigFile: host.devUrl+'js/config/config.js',
-		      optimize:"none",//否压缩  默认使用uglify压缩
-		      name: "almond",
-			  include: "index",
-			  findNestedDependencies:true
-		    }))
-		    .pipe(gulp.dest(host.lastUrl+"/js/"));
-  
-});
 // 复制index.html
 gulp.task("html",function(){
 	if(forbuild){
-		return  gulp.src(host.devUrl+"index.html")
+		return  gulp.src(host.devUrl+"*.html")
 			    .pipe(rev())
 			    .pipe(gulp.dest(host.path))
 			    .pipe(connect.reload());//自动刷新
 	}else{
-		return  gulp.src(host.devUrl+"index.html")
+		return  gulp.src(host.devUrl+"*.html")
 			    .pipe(rev())
 			    .pipe(gulp.dest(host.lastUrl));
 	}
@@ -92,7 +78,7 @@ gulp.task('scss', function() {
 		            keepBreaks: true,//类型：Boolean 默认：false [是否保留换行]
 		            keepSpecialComments: '*'//保留所有特殊前缀 当你用autoprefixer生成的浏览器前缀，如果不加这个参数，有可能将会删除你的部分前缀
 		        }))
-		        .pipe(gulp.dest(host.devUrl+'css'));
+		        .pipe(gulp.dest(host.devUrl+'rev'));
 	}else{
 		return  gulp.src(host.devUrl+'css/*.scss')
 		        .pipe(sass())
@@ -108,7 +94,7 @@ gulp.task('scss', function() {
 		            compatibility: 'ie7',//保留ie7及以下兼容写法 类型：String 默认：''or'*' [启用兼容模式； 'ie7'：IE7兼容模式，'ie8'：IE8兼容模式，'*'：IE9+兼容模式]
 		            keepSpecialComments: '*'//保留所有特殊前缀 当你用autoprefixer生成的浏览器前缀，如果不加这个参数，有可能将会删除你的部分前缀
 		        }))
-		        .pipe(gulp.dest(host.devUrl+'css'));
+		        .pipe(gulp.dest(host.devUrl+'rev'));
 	}
     
 });
@@ -116,9 +102,19 @@ gulp.task('scss', function() {
 gulp.task('css', function() {
 	if(forbuild){
 		return  gulp.src(host.devUrl+"css/**/*.css")
-    			.pipe(gulp.dest(host.path+"css"))
+    			.pipe(gulp.dest(host.devUrl+"rev"))
 	}else{
 		return  gulp.src(host.devUrl+"css/**/*.css")
+    			.pipe(gulp.dest(host.devUrl+"rev"))
+	}
+    
+});
+gulp.task('cssall',['scss','css'], function() {
+	if(forbuild){
+		return  gulp.src(host.devUrl+"rev/**/*.css")
+    			.pipe(gulp.dest(host.path+"css"))
+	}else{
+		return  gulp.src(host.devUrl+"rev/**/*.css")
     			.pipe(gulp.dest(host.lastUrl+"css"))
 	}
     
@@ -137,21 +133,17 @@ gulp.task("js",function(){
 
 // 初始化目录
 gulp.task('init', function(done) {
-	runSequence(['clean'],['images'], ['js'], ['scss'],['css'], ['html'],done);
-});
-gulp.task('build', function(done) {
-	forbuild = false;
-	runSequence(['clean'],['images'],['rjs'], ['scss'],['css'], ['html'],done);
+	runSequence(['clean'],['images'], ['js'],['cssall'],['html'],done);
 });
 // 侦听
 gulp.task("watch",function(){
     // 监听图片
     gulp.watch(host.devUrl+"img/**/*",["images"]);
     // 监听主文件
-    gulp.watch(host.devUrl+"index.html",["html"]);
+    gulp.watch(host.devUrl+"*.html",["html"]);
     // 设置队列
-    gulp.watch(host.devUrl+"js/**/*.js",['js',"html"]);
-    gulp.watch(host.devUrl+"css/**/*.*",['scss','css',"html"]);
+    gulp.watch(host.devUrl+"js/**/*.*",['js',"html"]);
+    gulp.watch(host.devUrl+"css/**/*.*",['cssall',"html"]);
 });
 
 // 使用connect启动一个Web服务器
