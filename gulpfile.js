@@ -43,7 +43,8 @@ gulp.task('rjs', function () {
 		      mainConfigFile: host.devUrl+'js/config/config.js',
 		      optimize:"none",//否压缩  默认使用uglify压缩
 		      name: "almond",
-			  include: "index"
+			  include: "index",
+			  findNestedDependencies:true
 		    }))
 		    .pipe(gulp.dest(host.lastUrl+"/js/"));
   
